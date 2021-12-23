@@ -1,0 +1,1 @@
+<h1>{{$emails}} Subscribed Your WebSite...</h1>

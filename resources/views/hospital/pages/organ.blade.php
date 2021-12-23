@@ -1,0 +1,50 @@
+@extends('hospital.layouts.app')  
+    @section('content')
+
+<div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Organ Request</h4>
+                    </div>
+                    
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-striped custom-table">
+								<thead>
+									<tr>
+                                    <th>ID</th>
+                                                        <th>organ Name</th>
+                                                        <th>Status</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Contact No</th>
+                                                        <th>Message</th>
+                                                        <th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+                                @foreach($organ as $organs)
+                                                                <tr class="odd gradeX">
+                                                                   
+                                                                <td>{{$organs->id}} </td>
+                                                                <td>{{$organs->organ_name}} </td>
+                                                                <td>{{$organs->status}} </td>
+                                                                <td>{{$organs->name}} </td>
+                                                                <td>{{$organs->email}} </td>
+                                                                <td>{{$organs->contact_no}} </td>
+                                                                <td>{{$organs->description}} </td>
+                                                                <td><a href="{{route('horgandelete',['id'=>$organs->id])}}" onclick="return confirm('Do You Really Want To Delete This Organ Request?')">
+                                                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a></td>
+                                                                </tr>
+                                                            @endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+            </div>	
+		</div>
+        @endsection
