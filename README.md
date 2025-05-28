@@ -42,7 +42,7 @@ The Human Organ Transplant (HOT) system provides a centralized platform for mana
 
 1. Clone the repository: git clone https://github.com/Patel4182/HOT.git
 2. Navigate to the project directory: cd HOT
-3. Install dependencies: composer install and npm intall
+3. Install dependencies: composer install and npm install
 4. Set up your .env file and database connection.
 5. Run migrations : php artisan migrate
 6. Serve the application : php artisan serve
