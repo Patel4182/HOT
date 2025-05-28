@@ -1,175 +1,166 @@
 <?php
 
-//Front
-//Home with Pages
+// Frontend Routes
 
-Route::get('data',array('as'=>'home','uses'=>'PageController@data'));
+Route::get('data', ['as' => 'front.data', 'uses' => 'PageController@data']);
 
-Route::get('/',array('as'=>'home','uses'=>'PageController@home'));
-Route::get('front/organ',array('as'=>'org','uses'=>'PageController@org'));
-Route::post('front/organ',array('as'=>'org','uses'=>'OrganController@addorg'));
-Route::get('front/about',array('as'=>'about','uses'=>'PageController@about'));
-Route::get('front/contact',array('as'=>'contact','uses'=>'PageController@contact'));
-Route::get('front/doctor',array('as'=>'doctor','uses'=>'PageController@doctor'));
-Route::get('front/bloodbank',array('as'=>'bloodbank','uses'=>'PageController@bloodbank'));
-Route::get('front/hospital',array('as'=>'hospital','uses'=>'PageController@hospital'));
-Route::get('front/services',array('as'=>'services','uses'=>'PageController@service'));
-Route::get('front/appointment',array('as'=>'appointment','uses'=>'AppointmentController@add'));
-Route::post('front/appointment',array('as'=>'appointment','uses'=>'AppointmentController@store'));
-Route::post('front/organ/view',array('as'=>'fstock','uses'=>'PageController@fstock'));
-Route::get('front/login',array('as'=>'logins','uses'=>'LoginController@login'));
+Route::get('/', ['as' => 'front.home', 'uses' => 'PageController@home']);
+Route::get('front/organ', ['as' => 'front.organ.get', 'uses' => 'PageController@org']);
+Route::post('front/organ', ['as' => 'front.organ.post', 'uses' => 'OrganController@addorg']);
+Route::get('front/about', ['as' => 'front.about', 'uses' => 'PageController@about']);
+Route::get('front/contact', ['as' => 'front.contact.get', 'uses' => 'PageController@contact']);
+Route::post('front/contact', ['as' => 'front.contact.post', 'uses' => 'ContactController@store']);
+Route::get('front/doctor', ['as' => 'front.doctor', 'uses' => 'PageController@doctor']);
+Route::get('front/bloodbank', ['as' => 'front.bloodbank', 'uses' => 'PageController@bloodbank']);
+Route::get('front/hospital', ['as' => 'front.hospital', 'uses' => 'PageController@hospital']);
+Route::get('front/services', ['as' => 'front.services', 'uses' => 'PageController@service']);
+Route::get('front/appointment', ['as' => 'front.appointment.get', 'uses' => 'AppointmentController@add']);
+Route::post('front/appointment', ['as' => 'front.appointment.post', 'uses' => 'AppointmentController@store']);
+Route::post('front/organ/view', ['as' => 'front.fstock', 'uses' => 'PageController@fstock']);
+Route::get('front/login', ['as' => 'front.login', 'uses' => 'LoginController@login']);
 
-//Password reset link request routes...
+
+// Password reset
 Route::get('password/email', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.email');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
-//Password reset routes...
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
 Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
 
 
-//subscribe
-Route::post('sub',array('as'=>'sub','uses'=>'PageController@sub'));
+// Subscribe
+Route::post('sub', ['as' => 'subscribe', 'uses' => 'PageController@sub']);
 
-//contact
-Route::get('front/contact',array('as'=>'addcontact','uses'=>'ContactController@add'));
-Route::post('front/contact',array('as'=>'addcontact','uses'=>'ContactController@store'));
+// Payment
 Route::get('paywithrazorpay', 'RazorpayController@payWithRazorpay')->name('paywithrazorpay');
-
-//Post Route For Makw Payment Request
 Route::post('payment', 'RazorpayController@payment')->name('payment');
 
-//login
-Route::get('login-registration/login',array('as'=>'login','uses'=>'LoginController@login'));
-Route::post('login-registration/login',array('as'=>'login','uses'=>'LoginController@store'));
-//registration
-Route::get('registration',array('as'=>'registration','uses'=>'RegistrationController@registration'));
-Route::get('doctorregister',array('as'=>'dregister','uses'=>'RegistrationController@dregister'));
-Route::post('doctorregister',array('as'=>'dregister','uses'=>'RegistrationController@dstore'));
-Route::get('hospitalregister',array('as'=>'hregister','uses'=>'RegistrationController@hregister'));
-Route::post('hospitalregister',array('as'=>'hregister','uses'=>'RegistrationController@hstore'));
-Route::get('Bloodbankregister',array('as'=>'bregister','uses'=>'RegistrationController@bregister'));
-Route::post('Bloodbankregister',array('as'=>'bregister','uses'=>'RegistrationController@bstore'));
+// Login & Registration
+Route::get('login-registration/login', ['as' => 'auth.login.get', 'uses' => 'LoginController@login']);
+Route::post('login-registration/login', ['as' => 'auth.login.post', 'uses' => 'LoginController@store']);
+
+Route::get('registration', ['as' => 'auth.registration', 'uses' => 'RegistrationController@registration']);
+Route::get('doctorregister', ['as' => 'auth.doctorregister.get', 'uses' => 'RegistrationController@dregister']);
+Route::post('doctorregister', ['as' => 'auth.doctorregister.post', 'uses' => 'RegistrationController@dstore']);
+Route::get('hospitalregister', ['as' => 'auth.hospitalregister.get', 'uses' => 'RegistrationController@hregister']);
+Route::post('hospitalregister', ['as' => 'auth.hospitalregister.post', 'uses' => 'RegistrationController@hstore']);
+Route::get('Bloodbankregister', ['as' => 'auth.bloodbankregister.get', 'uses' => 'RegistrationController@bregister']);
+Route::post('Bloodbankregister', ['as' => 'auth.bloodbankregister.post', 'uses' => 'RegistrationController@bstore']);
+
+// Logout
+Route::get('logout', ['as' => 'auth.logout', 'uses' => 'LoginController@logout']);
 
 
-//Organs
+// Admin Middleware group
+Route::group(['middleware' => 'admin'], function() {
 
-//logout
-Route::get('logout',array('as'=>'logout','uses'=>'LoginController@logout'));
+    // Hospitals
+    Route::get('admin/hospital', ['as' => 'admin.viewhospital', 'uses' => 'HospitalController@viewhospital']);
+    Route::get('hospital/view', ['as' => 'admin.hospitalall', 'uses' => 'HospitalController@view']);
+    Route::get('hospital/profile/{id}', ['as' => 'admin.hprofile', 'uses' => 'HospitalController@hprofile']);
+
+    // Bloodbanks
+    Route::get('profile/bloodbank/{id}', ['as' => 'admin.bprofile', 'uses' => 'HospitalController@bprofile']);
+    Route::get('status/bloodbank/{id}/{status}', ['as' => 'admin.bapprove', 'uses' => 'HospitalController@bapprove']);
+    Route::get('Bloodbank/delete/{id}', ['as' => 'admin.deletebloodbank', 'uses' => 'BloodbankController@destroy']);
+    Route::get('admin/bloodbank', ['as' => 'admin.allblood', 'uses' => 'BloodbankController@allblood']);
+
+    // Doctors
+    Route::get('admin/doctor', ['as' => 'admin.viewdoctor', 'uses' => 'DoctorController@viewdoctor']);
+    Route::get('doctor/view', ['as' => 'admin.doctorall', 'uses' => 'DoctorController@view']);
+    Route::get('doctor/profile/{id}', ['as' => 'admin.dprofile', 'uses' => 'DoctorController@dprofile']);
+    Route::get('doctor/{id}/{status}', ['as' => 'admin.dapprove', 'uses' => 'HospitalController@dapprove']);
+    Route::get('doctor/delete/{id}', ['as' => 'admin.deletedoctor', 'uses' => 'DoctorController@destroy']);
+    Route::get('doctor/edit/{id}', ['as' => 'admin.editdoctor', 'uses' => 'DoctorController@edit']);
+    Route::post('doctor/edit/{id}', ['as' => 'admin.editdoctor.post', 'uses' => 'DoctorController@update']);
+
+    // Dashboard
+    Route::get('admin/dashboard/{id}', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@dashboard']);
+
+    // Cities
+    Route::get('cities/add', ['as' => 'admin.addcities', 'uses' => 'CityController@add']);
+    Route::post('cities/add', ['as' => 'admin.addcities.post', 'uses' => 'CityController@store']);
+    Route::get('cities/view', ['as' => 'admin.viewcities', 'uses' => 'CityController@view']);
+    Route::get('cities/delete/{id}', ['as' => 'admin.deletecities', 'uses' => 'CityController@destroy']);
+    Route::get('cities/edit/{id}', ['as' => 'admin.editcities', 'uses' => 'CityController@edit']);
+    Route::post('cities/edit/{id}', ['as' => 'admin.editcities.post', 'uses' => 'CityController@update']);
+
+    // Hospitals CRUD
+    Route::get('hospital/add', ['as' => 'admin.addhospital', 'uses' => 'HospitalController@add']);
+    Route::post('hospital/add', ['as' => 'admin.addhospital.post', 'uses' => 'HospitalController@store']);
+    Route::get('hospital/delete/{id}', ['as' => 'admin.deletehospital', 'uses' => 'HospitalController@destroy']);
+    Route::get('hospital/edit/{id}', ['as' => 'admin.edithospital', 'uses' => 'HospitalController@edit']);
+    Route::post('hospital/edit/{id}', ['as' => 'admin.edithospital.post', 'uses' => 'HospitalController@update']);
+    Route::get('hospital/viewimage/{id}', ['as' => 'admin.viewimage', 'uses' => 'HospitalController@show']);
+    Route::get('hospital/{id}/{status}', ['as' => 'admin.happrove', 'uses' => 'HospitalController@happrove']);
+
+    // Inquiries
+    Route::post('inquiry/organ', ['as' => 'admin.addorganinquiry', 'uses' => 'InquiryController@organinquiry']);
+    Route::post('inquiry/blood', ['as' => 'admin.addbloodinquiry', 'uses' => 'InquiryController@bloodinquiry']);
+    Route::get('inquiry/view', ['as' => 'admin.viewinquiry', 'uses' => 'InquiryController@view']);
+    Route::get('inquiry/delete/{id}', ['as' => 'admin.deleteinquiry', 'uses' => 'InquiryController@destroy']);
+    Route::get('inquiry/reply/{id}', ['as' => 'admin.inquiryreply.get', 'uses' => 'InquiryController@reply']);
+    Route::post('inquiry/reply/{id}', ['as' => 'admin.inquiryreply.post', 'uses' => 'InquiryController@sendreply']);
+
+    // Contacts
+    Route::get('contact/view', ['as' => 'admin.viewcontact', 'uses' => 'ContactController@view']);
+    Route::get('contact/delete/{id}', ['as' => 'admin.deletecontact', 'uses' => 'ContactController@destroy']);
+    Route::get('contact/reply/{id}', ['as' => 'admin.contactreply.get', 'uses' => 'ContactController@reply']);
+    Route::post('contact/reply/{id}', ['as' => 'admin.contactreply.post', 'uses' => 'ContactController@sendreply']);
+
+    // Appointments
+    Route::get('appointment/view', ['as' => 'admin.viewappointment', 'uses' => 'AppointmentController@view']);
+    Route::get('appointment/delete/{id}', ['as' => 'admin.deleteappointment', 'uses' => 'AppointmentController@destroy']);
+    Route::get('appointment/reply/{id}', ['as' => 'admin.appreply.get', 'uses' => 'AppointmentController@reply']);
+    Route::post('appointment/reply/{id}', ['as' => 'admin.appreply.post', 'uses' => 'AppointmentController@sendreply']);
+
+    // Organs
+    Route::get('organs/view', ['as' => 'admin.organview', 'uses' => 'OrganController@vieworgan']);
+    Route::get('organs/delete/{id}', ['as' => 'admin.deleteorgan', 'uses' => 'OrganController@destroy']);
+});
+
+// Appointment approval route outside middleware
+Route::get('Appointment/{id}/{status}', ['as' => 'appapprove', 'uses' => 'AppointmentController@appapprove']);
 
 
-//middleware
-Route::group(['middleware' => 'admin'], function()
-{
-            //all
-            Route::get('admin/hospital',array('as'=>'viewhospital','uses'=>'HospitalController@viewhospital'));
-            Route::get('hospital/view',array('as'=>'hospitalall','uses'=>'HospitalController@view'));
-            Route::get('doctor/view',array('as'=>'doctorall','uses'=>'DoctorController@view'));
-            Route::get('hospital/profile/{id}', array('as'=>'hprofile','uses'=>'HospitalController@hprofile'));
-            Route::get('profile/bloodbank/{id}', array('as'=>'bprofile','uses'=>'HospitalController@bprofile'));
-            Route::get('status/bloodbank/{id}/{status}',array('as'=>'bapprove','uses'=>'HospitalController@bapprove'));
-            Route::get('Bloodbank/delete/{id}',array('as'=>'deletebloodbank','uses'=>'BloodbankController@destroy'));
-            Route::get('admin/doctor',array('as'=>'viewdoctor','uses'=>'DoctorController@viewdoctor'));
-            Route::get('doctor/profile/{id}', array('as'=>'dprofile','uses'=>'DoctorController@dprofile'));
-            Route::get('admin/bloodbank',array('as'=>'allblood','uses'=>'BloodbankController@allblood'));
-            Route::get('admin/dashboard/{id}',array('as'=>'dashboard','uses'=>'DashboardController@dashboard'));
-         
-          //Cities
-          Route::get('cities/add',array('as'=>'addcities','uses'=>'CityController@getStateList'));
-          Route::get('cities/add',array('as'=>'addcities','uses'=>'CityController@getCityList'));
-          Route::get('cities/add',array('as'=>'addcities','uses'=>'CityController@add'));
-          Route::post('cities/add',array('as'=>'addcities','uses'=>'CityController@store'));
-          Route::get('cities/view',array('as'=>'viewcities','uses'=>'CityController@view'));
-          Route::get('cities/delete/{id}',array('as'=>'deletecities','uses'=>'CityController@destroy'));
-          Route::get('cities/edit/{id}', array('as'=>'editcities','uses'=>'CityController@edit'));
-          Route::post('cities/edit/{id}', array('as'=>'editcities','uses'=>'CityController@update'));
+// Doctor Middleware Group
+Route::group(['middleware' => 'doctor'], function() {
+    Route::get('doctor/dashboard', ['as' => 'doctor.dashboard', 'uses' => 'DoctorController@dashboard']);
+    Route::get('doctor/profile', ['as' => 'doctor.profile.get', 'uses' => 'DoctorController@docprofile']);
+    Route::post('profile/Doctor', ['as' => 'doctor.profile.post', 'uses' => 'DoctorController@sdprofile']);
+    Route::get('doctor/edit/profile/{id}', ['as' => 'doctor.editprofile.get', 'uses' => 'DoctorController@editdocprofile']);
+    Route::post('doctor/edit/profile/{id}', ['as' => 'doctor.editprofile.post', 'uses' => 'DoctorController@updatedocprofile']);
+    Route::get('Doctor/appointment', ['as' => 'doctor.appointment', 'uses' => 'DoctorController@dappointment']);
+    Route::get('Doctor/organs/view', ['as' => 'doctor.organ.view', 'uses' => 'DoctorController@vieworgan']);
+    Route::get('Doctor/organs/delete/{id}', ['as' => 'doctor.organ.delete', 'uses' => 'DoctorController@destroyorgan']);
+    Route::post('doctor/logo/update/{id}', ['as' => 'doctor.logo.update', 'uses' => 'OrganController@updatedlogo']);
+});
 
-          //hospitals
-          Route::get('hospital/add',array('as'=>'addhospital','uses'=>'HospitalController@add'));
-          Route::post('hospital/add',array('as'=>'addhospital','uses'=>'HospitalController@store'));
-          Route::get('hospital/delete/{id}',array('as'=>'deletehospital','uses'=>'HospitalController@destroy'));
-          Route::get('hospital/edit/{id}', array('as'=>'edithospital','uses'=>'HospitalController@edit'));
-          Route::post('hospital/edit/{id}', array('as'=>'edithospital','uses'=>'HospitalController@update'));
-          Route::get('hospital/viewimage/{id}',array('as'=>'viewimage','uses'=>'HospitalController@show'));
-          Route::get('hospital/{id}/{status}',array('as'=>'happrove','uses'=>'HospitalController@happrove'));
+// Hospital Middleware Group
+Route::group(['middleware' => 'hospital'], function() {
+    Route::get('hospital/dashboard', ['as' => 'hospital.dashboard', 'uses' => 'HospitalController@create']);
+    Route::get('hospital/profile', ['as' => 'hospital.profile.get', 'uses' => 'HospitalController@profile']);
+    Route::get('profile/Hospital', ['as' => 'hospital.profile', 'uses' => 'HospitalController@hospitalprofile']);
+    Route::post('profile/Hospital', ['as' => 'hospital.profile.post', 'uses' => 'HospitalController@shprofile']);
+    Route::get('hospital/edit/profile/{id}', ['as' => 'hospital.editprofile.get', 'uses' => 'HospitalController@editprofile']);
+    Route::post('hospital/edit/profile/{id}', ['as' => 'hospital.editprofile.post', 'uses' => 'HospitalController@updateprofile']);
+    Route::get('hospital/doctor/{id}/{status}', ['as' => 'hospital.docapprove', 'uses' => 'HospitalController@docapprove']);
+    Route::get('hospital/doctors', ['as' => 'hospital.doctors', 'uses' => 'HospitalController@doctors']);
+    Route::get('hospital/appointment', ['as' => 'hospital.appointment', 'uses' => 'HospitalController@happointment']);
+    Route::get('hospital/doctor/delete/{id}', ['as' => 'hospital.deletedoctor', 'uses' => 'HospitalController@docdestroy']);
+    Route::get('hospitalorg', ['as' => 'hospital.org', 'uses' => 'HospitalController@hospitalorg']);
+    Route::get('Hospital/organs/delete/{id}', ['as' => 'hospital.organ.delete', 'uses' => 'HospitalController@destroyorgan']);
+    Route::get('hospital/organs/delete/{id}', ['as' => 'hospital.organ.del', 'uses' => 'HospitalController@destroyorgan']);
+});
 
-          //Doctor
-          Route::get('doctor/add',array('as'=>'adddoctor','uses'=>'DoctorController@add'));
-          Route::post('doctor/add',array('as'=>'adddoctor','uses'=>'DoctorController@store'));
-          Route::get('doctor/{id}/{status}',array('as'=>'dapprove','uses'=>'HospitalController@dapprove'));
-          Route::get('doctor/delete/{id}',array('as'=>'deletedoctor','uses'=>'DoctorController@destroy'));
-          Route::get('doctor/edit/{id}', array('as'=>'editdoctor','uses'=>'DoctorController@edit'));
-          Route::post('doctor/edit/{id}', array('as'=>'editdoctor','uses'=>'DoctorController@update'));
-
-          //Inquiry
-          Route::post('inquiry/organ',array('as'=>'addorganinquiry','uses'=>'InquiryController@organinquiry'));
-          Route::post('inquiry/blood',array('as'=>'addbloodinquiry','uses'=>'InquiryController@bloodinquiry'));
-          Route::get('inquiry/view',array('as'=>'viewinquiry','uses'=>'InquiryController@view'));
-          Route::get('inquiry/delete/{id}', array('as'=>'deleteinquiry','uses'=>'InquiryController@destroy'));
-          Route::get('inquiry/reply/{id}', array('as'=>'inquiryreply','uses'=>'InquiryController@reply'));
-          Route::post('inquiry/reply/{id}', array('as'=>'inquiryreply','uses'=>'InquiryController@sendreply'));
-
-          //contact
-          Route::get('contact/view',array('as'=>'viewcontact','uses'=>'ContactController@view'));
-          Route::get('contact/delete/{id}', array('as'=>'deletecontact','uses'=>'ContactController@destroy'));
-          Route::get('contact/reply/{id}', array('as'=>'contactreply','uses'=>'ContactController@reply'));
-          Route::post('contact/reply/{id}', array('as'=>'contactreply','uses'=>'ContactController@sendreply'));
-
-          //APPOINTMENT
-          Route::get('appointment/view',array('as'=>'viewappointment','uses'=>'AppointmentController@view'));
-          Route::get('appointment/delete/{id}', array('as'=>'deleteappointment','uses'=>'AppointmentController@destroy'));
-          Route::get('appointment/reply/{id}', array('as'=>'appreply','uses'=>'AppointmentController@reply'));
-          Route::post('appointment/reply/{id}', array('as'=>'appreply','uses'=>'AppointmentController@sendreply'));
-         
-          //organ
-          Route::get('organs/view',array('as'=>'organview','uses'=>'OrganController@vieworgan'));
-          Route::get('organs/delete/{id}', array('as'=>'deleteorgan','uses'=>'OrganController@destroy'));
-          }
-);
-
-Route::get('Appointment/{id}/{status}',array('as'=>'appapprove','uses'=>'AppointmentController@appapprove'));
-
-Route::group(['middleware' => 'doctor'], function()
-      {
-      Route::get('doctor/dashboard',array('as'=>'docdashboard','uses'=>'DoctorController@dashboard'));
-      Route::get('doctor/profile',array('as'=>'docprofile','uses'=>'DoctorController@docprofile'));
-      Route::get('profile/Doctor',array('as'=>'doctorprofile','uses'=>'DoctorController@doctorprofile'));
-      Route::post('profile/Doctor',array('as'=>'doctorprofile','uses'=>'DoctorController@sdprofile'));
-      Route::get('doctor/edit/profile/{id}',array('as'=>'editdocprofile','uses'=>'DoctorController@editdocprofile'));
-      Route::post('doctor/edit/profile/{id}',array('as'=>'editdocprofile','uses'=>'DoctorController@updatedocprofile'));
-      Route::get('Doctor/appointment',array('as'=>'dappointment','uses'=>'DoctorController@dappointment'));
-      Route::get('Doctor/organs/view',array('as'=>'vieworgan','uses'=>'DoctorController@vieworgan'));
-      Route::get('Doctor/organs/delete/{id}', array('as'=>'organdelete','uses'=>'DoctorController@destroyorgan'));
-      Route::post('doctor/logo/update/{id}', array('as'=>'updatedlogo','uses'=>'OrganController@updatedlogo'));
-}
-);
-
-Route::group(['middleware' => 'hospital'], function()
-{   
-    //hospital dashboard
-    Route::get('hospital/dashboard',array('as'=>'hospitaldashboard','uses'=>'HospitalController@create'));
-    Route::get('hospital/profile',array('as'=>'profile','uses'=>'HospitalController@profile'));
-    Route::get('profile/Hospital',array('as'=>'hospitalprofile','uses'=>'HospitalController@hospitalprofile'));
-    Route::post('profile/Hospital',array('as'=>'hospitalprofile','uses'=>'HospitalController@shprofile'));
-    Route::get('hospital/edit/profile/{id}',array('as'=>'edit-profile','uses'=>'HospitalController@editprofile'));
-    Route::post('hospital/edit/profile/{id}',array('as'=>'edit-profile','uses'=>'HospitalController@updateprofile'));
-    Route::get('hospital/doctor/{id}/{status}',array('as'=>'docapprove','uses'=>'HospitalController@docapprove'));
-    Route::get('hospital/doctors',array('as'=>'doctors','uses'=>'HospitalController@doctors'));
-    Route::get('hospital/appointment',array('as'=>'happointment','uses'=>'HospitalController@happointment'));
-    Route::get('hospital/doctor/delete/{id}',array('as'=>'hdeletedoctor','uses'=>'HospitalController@docdestroy'));
-    Route::get('hospitalorg',array('as'=>'hospitalorg','uses'=>'HospitalController@hospitalorg'));
-    Route::get('Hospital/organs/delete/{id}', array('as'=>'horgandelete','uses'=>'HospitalController@destroyorgan'));
-    Route::get('hospital/organs/delete/{id}', array('as'=>'delorgan','uses'=>'HospitalController@delorgan'));
-}
-);
 
 Route::group(['middleware' => 'blood'], function()
 { 
           //Bloodbank
       Route::get('dashboard/bloodbank',array('as'=>'bdashboard','uses'=>'BloodbankController@dashboard'));
       Route::get('stock/bloodbank',array('as'=>'stock','uses'=>'BloodbankController@stock'));
-      Route::get('profile/blood',array('as'=>'bprofile','uses'=>'BloodbankController@bprofile'));
-      Route::post('profile/blood',array('as'=>'bprofile','uses'=>'BloodbankController@sbprofile'));
+      Route::get('profile/blood',array('as'=>'bprofile.get','uses'=>'BloodbankController@bprofile'));
+      Route::post('profile/blood',array('as'=>'bprofile.post','uses'=>'BloodbankController@sbprofile'));
       Route::post('/add/stock',array('as'=>'addstock','uses'=>'BloodbankController@add'));
       Route::get('cities/delete/{id}',array('as'=>'deletecities','uses'=>'CityController@destroy'));
 }

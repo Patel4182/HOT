@@ -14,7 +14,7 @@
 				@if($errors->any())
                     @include('errors.error')
                 @endif
-				<form role="form" method="post" action="{{route('addorganinquiry')}}">
+				<form role="form" method="post" action="{{route('admin.addorganinquiry')}}">
 				{{csrf_field()}}
                 <div class="form-group">
 						<label class="col-form-label">Full Name:</label>
@@ -58,7 +58,7 @@
 				@if($errors->any())
                     @include('errors.error')
                 @endif
-				<form role="form" method="post" action="{{route('addbloodinquiry')}}">
+				<form role="form" method="post" action="{{route('admin.addbloodinquiry')}}">
 				{{csrf_field()}}
                 <div class="form-group">
 						<label class="col-form-label">Full Name:</label>
@@ -103,7 +103,7 @@
 				@if($errors->any())
                     @include('errors.error')
                 @endif
-				<form role="form" method="post" action="{{route('appointment')}}">
+				<form role="form" method="post" action="{{route('hospital.appointment')}}">
 				{{csrf_field()}}
 					<div class="form-group">
 						<label>Select Hospital</label>

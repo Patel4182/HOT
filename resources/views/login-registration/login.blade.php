@@ -28,7 +28,7 @@
                             @if($errors->any())
                                 @include('errors.error')
                             @endif
-                            <form action="{{route('login')}}" method="post" class="register-form">
+                            <form action="{{route('auth.login.post')}}" method="post" class="register-form">
                             {{csrf_field()}}
                                 <div class="form-group">
                                     <label><i class="zmdi zmdi-email"></i></label>
@@ -50,8 +50,8 @@
                                 </div>
                                 
                             </form>
-                            <p class="signup-image-link">Not Registered? <a href="{{route('dregister')}}">Register Here(For Doctor)</a><br>
-                                Not Registered? <a href="{{route('hregister')}}">Register Here(For Hospital)</a><br>
+                            <p class="signup-image-link">Not Registered? <a href="{{route('auth.doctorregister.get')}}">Register Here(For Doctor)</a><br>
+                                Not Registered? <a href="{{route('auth.hospitalregister.get')}}">Register Here(For Hospital)</a><br>
                                </p>
                         
                             </div>

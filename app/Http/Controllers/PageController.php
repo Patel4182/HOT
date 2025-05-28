@@ -89,7 +89,7 @@ class PageController extends Controller
     public function sub(Request $request)
     {
         $data = array('emails'=>$request->get('email'));
-       \ Mail::send('front.pages.email', $data, function ($message) use($data)
+        \Mail::send('front.pages.email', $data, function ($message) use($data)
         {
             $message->from('organtransplant1@gmail.com', 'Subscribe.');
             $message->SetBody($data['emails']);

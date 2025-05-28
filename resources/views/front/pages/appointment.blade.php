@@ -9,7 +9,7 @@
 	          	
 	            <h2 class="mb-4">Book an Apoointment</h2>
 	            <p>For more details check your mail after succesfully submit this form. </div>
-	          <form action="{{route('appointment')}}" method="post" class="login-form" >
+	          <form action="{{route('front.appointment.get')}}" method="post" class="login-form" >
 						{{csrf_field()}}
 			  <div class="d-md-flex">
 	    					<div class="form-group">

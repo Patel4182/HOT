@@ -20,8 +20,7 @@
                                     <h3>{{$b->name}}</h3>
                                     <span class="position mb-2">{{$b->email}}</span>
 									<span class="position mb-2">{{$b->contactno}}</span>
-                                   <!-- <a href="{{route('fstock')}}"><button class="btn btn-danger">View Stock</button></a> -->
-                                   <button type="button"  class="btn btn-danger px-6 py-3 mt-3" data-toggle="modal" data-target="#exampleModal4" data-whatever="@fat">
+                                    <button type="button"  class="btn btn-danger px-6 py-3 mt-3" data-toggle="modal" data-target="#exampleModal4" data-whatever="@fat">
 				                   View Stock
 			                        </button>
                                 </div>

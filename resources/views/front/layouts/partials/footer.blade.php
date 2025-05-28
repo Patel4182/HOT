@@ -24,11 +24,11 @@
             <div class="ftco-footer-widget mb-5 ml-md-3">
               <h2 class="ftco-heading-2">Quick Links</h2>
               <ul class="list-unstyled">
-                <li><a href="{{route('home')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
-                <li><a href="{{route('about')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>About Us</a></li>
-                <li><a href="{{route('hospital')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Hospitals</a></li>
-                <li><a href="{{route('bloodbank')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Bloodbank</a></li>
-                <li><a href="{{route('addcontact')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact Us</a></li>
+                <li><a href="{{route('front.home')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
+                <li><a href="{{route('front.about')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>About Us</a></li>
+                <li><a href="{{route('front.hospital')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Hospitals</a></li>
+                <li><a href="{{route('front.bloodbank')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Bloodbank</a></li>
+                <li><a href="{{route('front.contact.get')}}"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact Us</a></li>
               </ul>
             </div>
            
@@ -38,7 +38,7 @@
           <div class="col-md">
             <div class="ftco-footer-widget mb-3">
             	<h2 class="ftco-heading-2">Subscribe Us!</h2>
-              <form  method="POST" action="{{ route('sub')}}" class="subscribe-form">
+              <form  method="POST" action="{{ route('subscribe')}}" class="subscribe-form">
               {{csrf_field()}}
                 <div class="form-group">
                   <input type="text" class="form-control mb-2 text-center" placeholder="Enter email address" name="email">

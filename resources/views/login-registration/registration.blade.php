@@ -23,7 +23,7 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form action="{{route('registration')}}" class="login-form" method="post" role="form">
+                        <form action="{{route('auth.registration')}}" class="login-form" method="post" role="form">
                         {{csrf_field()}}
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="signup-image">
                         <figure><img src="{{asset('logreg/images/1.jpg')}}" alt="sing up image" height="500px" width="500px"></figure>
-                        <a href="{{route('login')}}" class="signup-image-link">I am already member</a>
+                        <a href="{{route('auth.login.get')}}" class="signup-image-link">I am already member</a>
                     </div>
                 </div>
             </div>

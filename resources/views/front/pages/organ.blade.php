@@ -10,7 +10,7 @@
 	            <h2 class="mb-4">Make a Request For Organs</h2>
 	            <p>Add Need & Donate Organs Details.</p>
 				</div>
-	          <form action="{{route('org')}}" method="post"  class="appointment-form ftco-animate">
+	          <form action="{{route('front.organ.post')}}" method="post"  class="appointment-form ftco-animate">
 						{{csrf_field()}}
 	    				<div class="d-md-flex">
 		    				<div class="form-group">

@@ -27,7 +27,7 @@
                         @include('errors.error')
                     @endif
                         <h2 class="form-title">Doctor Registration</h2>
-                        <form method="POST" class="register-form" action="{{route('dregister')}}">
+                        <form method="POST" class="register-form" action="{{route('auth.doctorregister.post')}}">
                         {{csrf_field()}}
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Full Name" name="name" value="{{ old('name') }}" required/>
@@ -71,7 +71,7 @@
                     </div>
                         <div class="signup-image">
                             <figure><img src="{{asset('logreg/images/doctor.jpg')}}" alt="sing up image"></figure>
-                            <p class="signup-image-link">Have Alreaddy an Account?<a href="{{route('login')}}">Login Here</a></p>
+                            <p class="signup-image-link">Have Alreaddy an Account?<a href="{{route('auth.login.get')}}">Login Here</a></p>
                             <div class="form-group form-button">
                                 <input type="submit" class="form-submit" value="Register"/>
                             </div>

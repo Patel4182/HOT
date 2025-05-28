@@ -22,7 +22,7 @@
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
-                        <form action="{{route('login')}}" class="login-form" method="post">
+                        <form action="{{route('front.login')}}" class="login-form" method="post">
                         {{csrf_field()}}
                             
                             <div class="form-group">

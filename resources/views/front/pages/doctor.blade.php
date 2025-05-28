@@ -18,7 +18,7 @@
                                 <div class="text pt-3 text-center">
                                     <h3>{{$doctors->name}}</h3>
                                     <span class="position mb-2">{{$doctors->specialization}}</span>
-                                    <a href="{{route('appointment')}}" class="btn btn-primary">Book AppointMent</a>
+                                    <a href="{{route('front.appointment.get')}}" class="btn btn-primary">Book AppointMent</a>
 
                                 </div>
                             </div>

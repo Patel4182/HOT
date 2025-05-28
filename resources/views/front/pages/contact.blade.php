@@ -16,7 +16,7 @@
               @include('errors.error')
             @endif
 
-					<form role="form" method="post" action="{{route('addcontact')}}">
+					<form role="form" method="post" action="{{route('front.contact.get')}}">
             {{csrf_field()}}
               <div class="form-group">
                 <input type="name" class="form-control" placeholder="Your Name" name="name" >
